@@ -19,6 +19,7 @@ class LocationsViewModel: ObservableObject{
     @Published var region: MKCoordinateRegion = MKCoordinateRegion()
     
     @Published var showList: Bool = false
+    @Published var showDetail: Bool = false
     
     init(){
         let locations = LocationsDataService.locations
@@ -36,20 +37,17 @@ class LocationsViewModel: ObservableObject{
     }
     
     func toggleShowList(){
-        self.showList = !self.showList
+        self.showList.toggle()
     }
     
     func showNextRegion(_ location: Location){
-        withAnimation {
+        withAnimation(.easeInOut) {
             self.currentLocation = location
             self.showList = false
         }
-        
     }
     
     func showNextLocation(){
-
-        
         guard let currentIndex = locations.firstIndex(where: {
             $0 == self.currentLocation
         })else{
@@ -68,7 +66,6 @@ class LocationsViewModel: ObservableObject{
         }
         
         showNextRegion(locations[nextIndex])
-        
     }
     
     

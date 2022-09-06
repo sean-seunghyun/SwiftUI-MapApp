@@ -9,6 +9,7 @@ import SwiftUI
 import MapKit
 struct LocationsView: View {
     @EnvironmentObject private var locationVM: LocationsViewModel
+    let maxWidthForIpad: CGFloat = 700
     
     var body: some View {
         ZStack{
@@ -21,6 +22,10 @@ struct LocationsView: View {
             }
             
         }
+        .sheet(isPresented: $locationVM.showDetail) {
+            LocationDetailView(location: locationVM.currentLocation)
+        }
+        
     }
 }
 
@@ -80,6 +85,7 @@ extension LocationsView{
             }
             
         }
+        .frame(maxWidth: maxWidthForIpad)
         .background(.thinMaterial)
         .cornerRadius(10)
         .shadow(radius: 20)
@@ -91,14 +97,17 @@ extension LocationsView{
             ForEach(locationVM.locations) { location in
                 if location == locationVM.currentLocation{
                     LocationPreviewView(location: locationVM.currentLocation)
+                        .frame(maxWidth: maxWidthForIpad)
                         .shadow(radius: 25)
                         .padding()
+                        .frame(maxWidth: .infinity)
                         .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                 }
-                
+                    
             }
             
         }
+        
     }
 }
 

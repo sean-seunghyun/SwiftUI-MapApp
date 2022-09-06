@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LocationPreviewView: View {
     @EnvironmentObject private var locationVM: LocationsViewModel
-
+    
     var location: Location
     var body: some View {
         
@@ -34,7 +34,7 @@ struct LocationPreviewView: View {
         )
         .cornerRadius(10)
     }
-        
+    
 }
 
 struct LoationPreviewView_Previews: PreviewProvider {
@@ -79,7 +79,7 @@ extension LocationPreviewView{
     
     var learnMoreButton: some View{
         Button {
-            
+            learnMoreButtonPressed()
         } label: {
             Text("Learn More")
                 .frame(width: 125, height: 35)
@@ -91,6 +91,7 @@ extension LocationPreviewView{
     var nextButton: some View{
         Button {
             nextButtonPressed()
+            
         } label: {
             Text("Next")
                 .frame(width: 125, height: 35)
@@ -101,5 +102,9 @@ extension LocationPreviewView{
     
     func nextButtonPressed(){
         locationVM.showNextLocation()
+    }
+    
+    func learnMoreButtonPressed(){
+        locationVM.showDetail = true
     }
 }
